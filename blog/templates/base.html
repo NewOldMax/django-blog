@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+    <title>Django App</title>
+    <link href="//getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <script src="//code.jquery.com/jquery-latest.js"></script>
+    <script src="//getbootstrap.com/dist/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/mouse.parallax.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</head>
+ 
+<body>
+    <div id="background" class="mouse-bg"></div>
+    <div id="dark-back" class="make-magic"></div>
+    <!-- <div id="background1" class="mouse-bg"></div>
+    <div id="background2" class="mouse-bg"></div>
+    <div id="background3" class="mouse-bg"></div>
+    <div id="background4" class="mouse-bg"></div> -->
+    <header>
+        <div class="container">
+            <h1><a href="{% url 'index' %}" class="make-magic">Django App</a></h1>
+        </div>
+    </header>
+    <div class="wrapper">
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; Company 2016</p>
+        </div>
+    </footer>
+</body>
+ 
+</html>
