@@ -7,8 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db import IntegrityError
 
-from .models import Post
-from .forms import PostForm
+from .models import Post, Comment
+from .forms import PostForm, CommentForm
 
 def index(request):
     posts = Post.objects.order_by('-created_at')
@@ -27,17 +27,31 @@ def add_post(request):
         form = PostForm(request.POST, instance=post)
         post = form.save()
     else:
-        messages.error(request, 'You must be authenticate to add post')
+        messages.error(request, 'You must be authenticated to add post')
     return HttpResponseRedirect(reverse('index'))
 
 
 def view(request, post_id):
     post = Post.objects.get(id=post_id)
     template = loader.get_template('post/view.html')
+    form = CommentForm()
+    comments = Comment.objects.filter(post=post).order_by('-created_at')
     context = RequestContext(request, {
-        'post': post
+        'post': post,
+        'form': form,
+        'comments': comments
     })
     return HttpResponse(template.render(context))
+
+def add_comment(request, post_id):
+    if request.user.is_authenticated():
+        post = Post.objects.get(id=post_id)
+        comment = Comment(author=request.user, post=post)
+        form = CommentForm(request.POST, instance=comment)
+        comment = form.save()
+    else:
+        messages.error(request, 'You must be authenticated to add comment')
+    return HttpResponseRedirect(reverse('view', args=post_id))
 
 @require_http_methods(["POST"])
 def login_view(request):

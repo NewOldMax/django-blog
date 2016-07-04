@@ -11,6 +11,32 @@
                 {{post.text|linebreaks}}
             </div>
         </div>
+        <div class="post-comment block">
+            {% if user.is_authenticated %}
+                <form class="form" role="form" method="post" action="{% url 'add_comment' post.id %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.text.errors }}
+                        {{ form.text.label_tag }}
+                        {{ form.text }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add comment</button>
+                </form>
+            {% else %}
+                <p>You must be authenticated to add comments.</p>
+            {% endif %}
+        </div>
+        {% if comments %}
+            <div class="post-comments block">
+                <h4>Comments ({{comments|length}})</h4>
+                {% for comment in comments %}
+                    <div class="post-comment-item">
+                        <small>{{comment.author}} at {{comment.created_at}}</small>
+                        <p>{{comment.text}}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     {% else %}
         <div class="block">
             <p>Post not found :(</p>
