@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog.apps.BlogConfig'
+    'blog.apps.BlogConfig',
+    'markitup'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -128,3 +129,7 @@ STATIC_URL = '/blog/static/'
 MESSAGE_TAGS = {
     messages.ERROR: 'danger'
 }
+
+MARKITUP_FILTER = ('markdown.markdown', {'safe_mode': 'escape', 'output_format':'html5'})
+
+JQUERY_URL = None

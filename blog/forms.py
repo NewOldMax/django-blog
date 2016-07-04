@@ -1,4 +1,5 @@
 from django.forms import ModelForm, TextInput, Textarea
+from markitup.widgets import MarkItUpWidget
 from models import Post, Comment
 
 class PostForm(ModelForm):
@@ -15,5 +16,5 @@ class CommentForm(ModelForm):
         model = Comment
         fields = ['text']
         widgets = {
-            'text': Textarea(attrs={'class': 'form-control', 'rows': '5'}),
+            'text': MarkItUpWidget(attrs={'class': 'form-control', 'rows': '5'}),
         }
