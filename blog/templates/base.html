@@ -3,9 +3,11 @@
 {% load staticfiles %}
 <head>
     <title>Django App</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link href="//getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="//getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 
     <script src="//code.jquery.com/jquery-latest.js"></script>
     <script src="//getbootstrap.com/dist/js/bootstrap.min.js"></script>
@@ -23,6 +25,9 @@
     <header>
         <div class="container">
             <h1><a href="{% url 'index' %}" class="make-magic">Django App</a></h1>
+            {% if user.is_authenticated %}
+                <span class="user-block">Hi, <big class="bigger">{{user.username}}!</big> <small><a href="{% url 'logout' %}" title="logout">not you?</a></small></span>
+            {% endif %}
         </div>
     </header>
     <div class="wrapper">
